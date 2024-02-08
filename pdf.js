@@ -324,9 +324,10 @@ function generatePdf(quotationData, doc, docWidth, docHeight) {
         }
 
         // /${quotationData.invoiceno}
-        doc.save(`./pdfs/${quotationData.invoiceno}.pdf`);
+        doc.save(`${__dirname}/pdfs/${quotationData.invoiceno}.pdf`);
         return quotationData;
     } catch (error) {
+        console.log('error', error)
         return error;
     }
 }
