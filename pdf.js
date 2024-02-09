@@ -42,22 +42,22 @@ function generatePdf(quotationData, doc, docWidth, docHeight) {
                     "meshes": [
                         {
                             "name": "Fibreglass Mesh",
-                            "image": "img1.jpg",
+                            "image": "windows/velcro.jpg",
                             "price": 45
                         },
                         {
                             "name": "VELCR0 FIT (Elite Fibreglass)",
-                            "image": "img2.jpg",
+                            "image": "windows/velcro.jpg",
                             "price": 60
                         },
                         {
                             "name": "VELCR0 FIT (Tuff Screen)",
-                            "image": "img3.jpg",
+                            "image": "windows/velcro.jpg",
                             "price": 150
                         },
                         {
                             "name": "VELCR0 FIT (Pet Screen)",
-                            "image": "img4.jpg",
+                            "image": "windows/velcro.jpg",
                             "price": 167
                         }
                     ]
@@ -67,22 +67,22 @@ function generatePdf(quotationData, doc, docWidth, docHeight) {
                     "meshes": [
                         {
                             "name": "SSvue",
-                            "image": "img1.jpg",
+                            "image": "windows/classic.jpg",
                             "price": 240
                         },
                         {
                             "name": "CLASSIC WINDOW FIT (Fibreglass)",
-                            "image": "img2.jpg",
+                            "image": "windows/classic.jpg",
                             "price": 170
                         },
                         {
                             "name": "CLASSIC WINDOW FIT (Aluminium)",
-                            "image": "img3.jpg",
+                            "image": "windows/classic.jpg",
                             "price": 200
                         },
                         {
                             "name": "CWF (Stainless steel) ",
-                            "image": "img4.jpg",
+                            "image": "windows/classic.jpg",
                             "price": 270
                         }
                     ]
@@ -92,12 +92,12 @@ function generatePdf(quotationData, doc, docWidth, docHeight) {
                     "meshes": [
                         {
                             "name": "Elite Fibreglass Mesh",
-                            "image": "img1.jpg",
+                            "image": "windows/glossy.jpg",
                             "price": 350
                         },
                         {
                             "name": "GLOSSY ROLL FIT - OUTER (Elite Fibreglass Mesh)",
-                            "image": "img1.jpg",
+                            "image": "windows/glossy.jpg",
                             "price": 380
                         }
                     ]
@@ -107,12 +107,12 @@ function generatePdf(quotationData, doc, docWidth, docHeight) {
                     "meshes": [
                         {
                             "name": "Waterproof Mesh",
-                            "image": "img1.jpg",
+                            "image": "windows/creases.jpg",
                             "price": 410
                         },
                         {
                             "name": "CREASE FIT DITTO - DOUBLE (Waterproof Mesh)",
-                            "image": "img1.jpg",
+                            "image": "windows/creased.jpg",
                             "price": 450
                         }
                     ]
@@ -123,22 +123,22 @@ function generatePdf(quotationData, doc, docWidth, docHeight) {
                     "meshes": [
                         {
                             "name": "SSvue",
-                            "image": "img1.jpg",
+                            "image": "windows/trim.jpg",
                             "price": 670
                         },
                         {
                             "name": "TRIM GLIDE FIT (Fiberglass Mesh)",
-                            "image": "img1.jpg",
+                            "image": "windows/trim.jpg",
                             "price": 625
                         },
                         {
                             "name": "TRIM GLIDE FIT (Elite Fibreglass)",
-                            "image": "img1.jpg",
+                            "image": "windows/trim.jpg",
                             "price": 635
                         },
                         {
                             "name": "TRIM GLIDE FIT (Aluminium Mesh)",
-                            "image": "img1.jpg",
+                            "image": "windows/trim.jpg",
                             "price": 667
                         },
                         /*  {
@@ -237,7 +237,9 @@ function generatePdf(quotationData, doc, docWidth, docHeight) {
             var titletextWidth = doc.getTextWidth(tlttext);
             var titlecenterX = (doc.internal.pageSize.getWidth() - titletextWidth) / 2;
             doc.text(tlttext, titlecenterX, 87);
-            doc.line(titlecenterX - 5, 90, titlecenterX + 5 + titletextWidth, 90)
+            doc.line(titlecenterX - 5, 90, titlecenterX + 5 + titletextWidth, 90);
+            const windowimg = fs.readFileSync(__dirname + `/assets/images/${itemtypes.meshes[0].image}`);
+
             doc.autoTable({
                 theme: 'grid',
                 head: columns,
@@ -267,7 +269,7 @@ function generatePdf(quotationData, doc, docWidth, docHeight) {
                     // doc.text(`(${itemtypes.meshes[0].name})`, 43, 97, { align: 'center' });
                     // doc.rect(13, 100, 60, 50, 'F'); 
                     doc.setLineWidth(0.1);
-                    doc.addImage(window, 'JPG', 18, 110, 40, 40);
+                    doc.addImage(windowimg, 'JPG', 18, 110, 40, 40);
                     doc.setDrawColor(199, 199, 199);
                     doc.rect(13, 105, 60, 50);
                     doc.setFont(styles.font);
@@ -300,10 +302,16 @@ function generatePdf(quotationData, doc, docWidth, docHeight) {
             theme: 'plain',
             head: [['TERMS AND CONDITIONS']],
             body: [
-                ['1. An Intellectual Property clause will inform users that the contents, logo and other visual media you created is your property and is protected by copyright laws.'],
-                ['2. A Termination clause will inform users that any accounts on your website and mobile app, or users access to your website and app, can be terminated in case of abuses or at your sole discretion. '],
-                ['3. A Governing Law clause will inform users which laws govern the agreement. These laws should come from the country in which your company is headquartered or the country from which you operate your website and mobile app. '],
-                ['4. A Links to Other Websites clause will inform users that you are not responsible for any third party websites that you link to. This kind of clause will generally inform users that they are responsible for reading and agreeing (or disagreeing) with the Terms and Conditions or Privacy Policies of these third parties.                '],
+                ['1. 50% Advance payment for order confirmation.'],
+                ['2. 18% GST 2% Packing Charges and Transportation are additional.'],
+                ['3. Payment should be made in favour of Kudilagam Interiors & Promoters.'],
+                ['4. Balance Payment should be made on date once the supply or installation is completed.'],
+                ['5. Kudilagam Interiors & Promoters accepts no liability for consequential damages however caused.'],
+                ['6. Supply and installation of product will be 15 days from date of confirmation.'],
+                ['7. No Replacement of material on placement of order.'],
+                ['8. Advance paid is non refundable on cancellation of the order.'],
+                ['9. Electricity, water and storage for safeguarding the goods should be provided by the client at free of cost.'],
+            
             ],
             styles: {
                 head: {

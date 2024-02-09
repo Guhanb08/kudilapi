@@ -36,6 +36,7 @@ app.post("/kudilapi/quotation", async (req, res) => {
     let quotationData = await pdf.pdfcreate(req.body);
     if (quotationData.invoiceno) {
       const pdfAttachment = fs.readFileSync(
+      
         `${__dirname}/pdfs/${quotationData.invoiceno}.pdf`
       );
       var mailOptions = {
@@ -79,6 +80,7 @@ app.post("/kudilapi/quotation", async (req, res) => {
 
 app.listen(process.env.PORT || 7001);
 
-app.listen(7000, () => {
+/* app.listen(7000, () => {
   console.log(`Kudil Service listening to  7001`);
 });
+ */
