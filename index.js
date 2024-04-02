@@ -35,24 +35,31 @@ app.post("/kudilapi/quotation", async (req, res) => {
   try {
     let quotationData = await pdf.pdfcreate(req.body);
     if (quotationData.invoiceno) {
-      const pdfAttachment = fs.readFileSync(
-      
-        `${__dirname}/pdfs/${quotationData.invoiceno}.pdf`
-      );
+     
       var mailOptions = {
-        from: "service@kudilagam.com",
+        from: '"KUDILAGAM" <service@kudilagam.com>',
         to: quotationData.email,
+        cc: 'info@kudilagam.com',
+        bcc: 'guhan@pec.edu',
         subject: `Quotation ${quotationData.invoiceno} - Thank You for Reaching Us`,
         text: `Dear ${quotationData.name},\n\nThank you for reaching out to us. We appreciate your interest in our services. Please find attached the quotation (Quotation_${quotationData.invoiceno}.pdf) for your reference.\n\nIf you have any questions or require further assistance, feel free to contact us.\n\nBest regards,\nThe Kudilagam Team`,
         attachments: [
+         
+        ],
+      };
+      quotationData.pdfs.forEach(pdf => {
+        const pdfAttachment = fs.readFileSync(
+          `${__dirname}/pdfs/${pdf}.pdf`
+        );
+        mailOptions.attachments.push(
           {
-            filename: `Quotation_${quotationData.invoiceno}.pdf`, 
+            filename: `Quotation_${pdf}.pdf`, 
             content: pdfAttachment,
             encoding: "base64",
           },
-        ],
-      };
-      transporter.sendMail(mailOptions, function (error, info) {
+        )
+      })
+     /*  transporter.sendMail(mailOptions, function (error, info) {
         if (error) {
           res.status(500).send({
             message: "Something Went Wrong",
@@ -62,10 +69,10 @@ app.post("/kudilapi/quotation", async (req, res) => {
             data: quotationData,
           });
         }
-      });
-     /*  res.status(200).send({
-        data: quotationData,
       }); */
+       res.status(200).send({
+        data: quotationData,
+      });
     } else {
       res.status(500).send({
         message: "Something Went Wrong",
